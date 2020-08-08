@@ -8,13 +8,15 @@ import java.util.Objects;
 @Entity
 public class Employee {
     private @Id @GeneratedValue Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String role;
 
     Employee() {}
 
-    Employee(String name, String role) {
-        this.name = name;
+    Employee(String firstName, String lastName, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 
@@ -23,7 +25,7 @@ public class Employee {
     }
 
     public String getName() {
-        return name;
+        return this.firstName +  " " + this.lastName;
     }
 
     public String getRole() {
@@ -35,7 +37,25 @@ public class Employee {
     }
 
     public void setName(String name) {
-        this.name = name;
+        String[] parts = name.split(" ");
+        this.firstName = parts[0];
+        this.lastName = parts[1];
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setRole(String role) {
@@ -47,21 +67,23 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id.equals(employee.id) &&
-                Objects.equals(name, employee.name) &&
+        return Objects.equals(id, employee.id) &&
+                Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(lastName, employee.lastName) &&
                 Objects.equals(role, employee.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, role);
+        return Objects.hash(id, firstName, lastName, role);
     }
 
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }
